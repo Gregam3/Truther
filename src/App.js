@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Node } from './Node';
+import Node from './Node';
 import Draggable from 'react-draggable';
 
 import './App.css';
@@ -9,12 +9,26 @@ const CENTER = RADIUS * 1.25;
 
 export default class App extends Component {
 
-  state = {
-    x: CENTER, y: CENTER, radius: RADIUS,
-    color: "red", strokeWidth: 0, title: "Example"
+  constructor(props) {
+    super(props);
+    this.addNode();
   }
 
+  state = {nodes: [1,2,3]};
+
   render() {
-    return <Node/>
+    console.log('rendered');
+
+    return <div>
+      <button onClick={() => this.addNode()}>Add Node</button>
+       {this.state.nodes.map(node => node)}
+      </div>
+  }
+
+  addNode() {
+    console.log('added node', this.state.nodes)
+    let nodes = this.state.nodes;
+    nodes.push(<Node title={Math.random().toFixed(2)}></Node>);
+    this.setState({nodes});
   }
 }
