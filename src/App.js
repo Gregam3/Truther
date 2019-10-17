@@ -1,18 +1,20 @@
-import React from 'react';
-import './App.css';
-import {Node} from './Node';
-import * as d3 from 'd3';
+import React, { Component } from 'react';
+import { Node } from './Node';
+import Draggable from 'react-draggable';
 
-export class App extends React.Component {
+import './App.css';
+
+const RADIUS = 40;
+const CENTER = RADIUS * 1.25;
+
+export default class App extends Component {
+
+  state = {
+    x: CENTER, y: CENTER, radius: RADIUS,
+    color: "red", strokeWidth: 0, title: "Example"
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <Node  />
-          <Node  />
-        </header>
-      </div>);
+    return <Node/>
   }
 }
-
-export default App;
