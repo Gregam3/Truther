@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Node from './Node';
-import { SteppedLineTo } from 'react-lineto';
-import { _ } from 'lodash';
-
 import './App.css';
 
 const RADIUS = 40;
 const CENTER = RADIUS * 1.25;
+
+let nodeCount = 1;
+
+
 
 export default class App extends Component {
 
@@ -15,21 +16,21 @@ export default class App extends Component {
     this.addNode();
   }
 
-  state = {nodes: [1,2,3]};
+  state = {nodes: []};
 
   render() {
     console.log('rendered');
 
     return <div>
-      <button onClick={() => this.addNode()}>Add Node</button>
+      <button onClick={() => this.addNode(nodeCount)}>Add Node</button>
        {this.state.nodes.map(node => node)}
       </div>
   }
 
-  addNode() {
+  addNode(title) {
     console.log('added node', this.state.nodes)
     let nodes = this.state.nodes;
-    nodes.push(<Node title={Math.random().toFixed(2)}></Node>);
+    nodes.push(<Node title={title}></Node>);
     this.setState({nodes});
   }
 }
