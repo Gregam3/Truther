@@ -30,7 +30,7 @@ export default class App extends Component {
   addNode(title) {
     console.log('added node', this.state.nodes)
     let nodes = this.state.nodes;
-    nodes.push(<Node title={title}></Node>);
+    nodes.push(<Node title={title}/>);
     this.setState({nodes});
   }
 }

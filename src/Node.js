@@ -10,9 +10,7 @@ document.addEventListener('contextmenu', event => event.preventDefault())
 
 export default class Node extends React.Component {
 
-    
-   menu = [{ "label": "Item 1" }, { "label": "Menu item 2" }]
-
+    menu = [{ "label": "Item 1" }, { "label": "Menu item 2" }]
 
     constructor(props) {
         super(props);
@@ -21,7 +19,9 @@ export default class Node extends React.Component {
     }
 
     handleDrag = data => {
-        this.setState({ position: _.get(data, 'target.parentElement.transform.baseVal[0].matrix') });
+        const translateValue = _.get(data, 'target.parentElement.attributes.transform');
+        console.log(translateValue );
+        this.setState({ svgPosition: translateValue });
     }
 
     render() {
@@ -32,7 +32,7 @@ export default class Node extends React.Component {
                     <text x={CENTER} y={CENTER} fill="black">{this.state.title}</text>
                 </svg>
             </Draggable>
-            <CustomContext items={this.menu}></CustomContext>
+            <CustomContext items={this.menu} transform={this.state.translateValue}></CustomContext>
         </div>
     }
 }
