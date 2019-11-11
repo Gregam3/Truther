@@ -7,6 +7,7 @@ const RADIUS = 40;
 const CENTER = RADIUS * 1.25;
 
 document.addEventListener('contextmenu', event => event.preventDefault())
+const TRANSLATE_PATTERN = /translate\(([0-9]*),([0-9]*)\)/i
 
 export default class Node extends React.Component {
 
@@ -19,20 +20,31 @@ export default class Node extends React.Component {
     }
 
     handleDrag = data => {
-        const translateValue = _.get(data, 'target.parentElement.attributes.transform');
-        console.log(translateValue );
-        this.setState({ svgPosition: translateValue });
+        const translateValue = _.get(data, 'target.parentElement.attributes.transform.value');
+
+        if (translateValue !== undefined) {
+            const translateMatch = translateValue.match(TRANSLATE_PATTERN);
+            console.log(translateMatch)
+
+            if (translateMatch !== null) { }
+            this.setState({
+                translate: {
+                    x: Number(translateMatch[1]), y: Number(translateMatch[2])
+                }
+            });
+        }
     }
 
+
     render() {
-        return <div>
+        return <div x>
             <Draggable onDrag={this.handleDrag}>
                 <svg height={RADIUS * 2.35} width={RADIUS * 2.35} className="A">
                     <circle cx={CENTER} cy={CENTER} r={RADIUS} stroke={'red'} fill={'red'} className="node" />
                     <text x={CENTER} y={CENTER} fill="black">{this.state.title}</text>
                 </svg>
             </Draggable>
-            <CustomContext items={this.menu} transform={this.state.translateValue}></CustomContext>
+            <CustomContext items={this.menu} position={this.state.translate}></CustomContext>
         </div>
     }
 }
