@@ -1,39 +1,21 @@
 import React from 'react';
+import { getPortPromise } from 'portfinder';
 
 class CustomContext extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            visible: false,
-            position: props.position
+            visible: false
         };
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.position !== this.state.position) {
-          this.setState({ position: nextProps.position });
-        }
-      }
-
-    componentDidMount() {
-        var self = this;
-        document.addEventListener("contextmenu", function (event) {
-            event.preventDefault();
-            const clickX = event.clientX;
-            const clickY = event.clientY;
-            self.setState({ visible: true, x: clickX, y: clickY });
-
-        });
-        document.addEventListener("click", function (event) {
-            event.preventDefault();
-            self.setState({ visible: false, x: 0, y: 0 });
-
-        });
+        this.setState({ position: nextProps.position, visible: nextProps.visible });
     }
 
     returnMenu(items) {
-    
+
         var myStyle = {
             'position': "absolute",
             'top': this.state.position.y,
